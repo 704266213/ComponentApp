@@ -2,7 +2,6 @@ package com.component.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.RadioButton
@@ -12,9 +11,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.widget.Toast
 import com.component.BuildConfig
 import com.component.base.BaseFragment
-import com.component.model.MainModel
 import com.alibaba.android.arouter.launcher.ARouter
-import com.component.base.RouteConfig
+import com.component.base.config.RouteConfig
 
 
 class MainActivity : AppCompatActivity() {

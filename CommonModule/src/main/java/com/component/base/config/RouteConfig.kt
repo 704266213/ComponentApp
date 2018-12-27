@@ -1,4 +1,4 @@
-package com.component.base
+package com.component.base.config
 
 /**
  * 项目名称：ComponentApp
@@ -13,13 +13,13 @@ package com.component.base
 object RouteConfig {
 
     //获得主页模块fragment
-    val HomeFragment = "/home/fragment"
+    const val HomeFragment = "/home/fragment"
     // 获得热门模块fragment
-    val HotFragment = "/hot/fragment"
+    const val HotFragment = "/hot/fragment"
     //获得搜索模块fragment
-    val SearchFragment = "/search/fragment"
+    const val SearchFragment = "/search/fragment"
     //获得用户模块fragment
-    val UserFragment = "/user/fragment"
+    const val UserFragment = "/user/fragment"
 
 
 }
