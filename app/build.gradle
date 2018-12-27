@@ -22,6 +22,12 @@ android {
         versionCode rootProject.ext.versions.versionCode
         versionName rootProject.ext.versions.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
+            }
+        }
+
     }
 
     //signingConfigs需要放在buildTypes签名之前不然找不到
@@ -154,6 +160,7 @@ dependencies {
     implementation rootProject.ext.dependencies["kotlin-stdlib-jdk7"]
 
     implementation rootProject.ext.dependencies["arouter-api"]
+    kapt  rootProject.ext.dependencies["arouter-compiler"]
 
 
     implementation project(path: ':CommonModule')

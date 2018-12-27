@@ -18,6 +18,13 @@ android {
         versionCode rootProject.ext.versions["versionCode"]
         versionName rootProject.ext.versions["versionName"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //Arouter路由配置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+                includeCompileClasspath = true
+            }
+        }
     }
 
     buildTypes {
@@ -40,7 +47,7 @@ dependencies {
     implementation rootProject.ext.dependencies["kotlin-stdlib-jdk7"]
 
     implementation rootProject.ext.dependencies["arouter-api"]
-    kapt rootProject.ext.dependencies["arouter-compiler"]
+    kapt  rootProject.ext.dependencies["arouter-compiler"]
 
     testImplementation rootProject.ext.dependencies["junit"]
     androidTestImplementation rootProject.ext.dependencies["runner"]

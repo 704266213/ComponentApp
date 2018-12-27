@@ -2,8 +2,14 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-android {
+apply plugin: 'kotlin-kapt'
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
 
+android {
 
     compileSdkVersion rootProject.ext.versions["compileSdkVersion"]
 
@@ -34,7 +40,9 @@ dependencies {
     implementation rootProject.ext.dependencies["constraint-layout"]
 
     implementation rootProject.ext.dependencies["kotlin-stdlib-jdk7"]
+
     implementation rootProject.ext.dependencies["arouter-api"]
+    kapt  rootProject.ext.dependencies["arouter-compiler"]
 
     //依赖基类库
     implementation project(':CommonModule')

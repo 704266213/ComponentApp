@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
+import android.widget.RadioButton
 import com.component.R
 import com.component.base.tools.ScreenTool
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,6 +21,22 @@ class MainActivity : AppCompatActivity() {
 
     private var mExitTime: Long = 0
 
+    private var currentIndex = 0
+    private lateinit var radioButtons: List<RadioButton>
+    private var isOpenModules = mutableListOf(
+        BuildConfig.haseHomeModule,
+        BuildConfig.haseHotModule,
+        BuildConfig.haseSearchModule,
+        BuildConfig.haseUserModule
+    )
+    private var routePaths = mutableListOf(
+        RouteConfig.HomeFragment,
+        RouteConfig.HotFragment,
+        RouteConfig.SearchFragment,
+        RouteConfig.UserFragment
+    )
+
+    private var baseFragments = mutableListOf<BaseFragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,18 +48,48 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        val mainModels = mutableListOf<MainModel>()
-        val mainModel = MainModel()
-        mainModel.isAddModule = BuildConfig.haseHomeModule
-        Log.e("XLog","=======HomeFragment==============${ARouter.getInstance().build(RouteConfig.HomeFragment).navigation()}")
-//        mainModel.baseFragment = ARouter.getInstance().build(RouteConfig.HomeFragment).navigation() as BaseFragment
-//        mainTab.setOnC
+        radioButtons = mutableListOf(home, hot, search, user)
+        var position = 0
+        radioButtons.forEachIndexed { index, radioButton ->
+            if (isOpenModules[index]) {
+                val baseFragment = ARouter.getInstance().build(routePaths[index]).navigation() as BaseFragment
+                baseFragments.add(baseFragment)
+                radioButton.setOnClickListener(OnTabClickListener(position++))
+            } else {
+                radioButton.visibility = View.GONE
+            }
+        }
+        addTabFragment()
+    }
 
-        ARouter.getInstance().build("/user/login").navigation()
+    private fun addTabFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+        baseFragments.forEachIndexed { index, baseFragment ->
+            transaction.add(R.id.container, baseFragment)
+            if (index == currentIndex) {
+                transaction.show(baseFragment)
+            } else {
+                transaction.hide(baseFragment)
+            }
+        }
+        transaction.commit()
+    }
+
+    fun switchFragment(index: Int) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.hide(baseFragments[currentIndex])
+        currentIndex = index
+        transaction.show(baseFragments[currentIndex])
+        transaction.commit()
     }
 
 
+    inner class OnTabClickListener(private val position: Int) : View.OnClickListener {
 
+        override fun onClick(v: View) {
+            switchFragment(position)
+        }
+    }
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
