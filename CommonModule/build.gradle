@@ -39,15 +39,27 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-
     implementation rootProject.ext.dependencies["support-v4"]
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["constraint-layout"]
+    implementation rootProject.ext.dependencies["recyclerview-v7"]
+    implementation rootProject.ext.dependencies["design"]
+    implementation rootProject.ext.dependencies["cardview-v7"]
+
 
     implementation rootProject.ext.dependencies["kotlin-stdlib-jdk7"]
 
+    implementation rootProject.ext.dependencies["gson"]
+    implementation rootProject.ext.dependencies["retrofit2-converter-gson"]
+
+    implementation rootProject.ext.dependencies["okhttp3"]
+    implementation rootProject.ext.dependencies["okio"]
+
+    implementation rootProject.ext.dependencies["glide"]
+    annotationProcessor rootProject.ext.dependencies["glideCompiler"]
+
     implementation rootProject.ext.dependencies["arouter-api"]
-    kapt  rootProject.ext.dependencies["arouter-compiler"]
+    kapt rootProject.ext.dependencies["arouter-compiler"]
 
     testImplementation rootProject.ext.dependencies["junit"]
     androidTestImplementation rootProject.ext.dependencies["runner"]
