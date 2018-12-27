@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ComponentApp</string>
+    
+    
+    <string name="home">首页</string>
+    <string name="hot">热门</string>
+    <string name="search">搜索</string>
+    <string name="discovery">发现</string>
+    <string name="user">我的</string>
+    
+   
+
+
+
+</resources>

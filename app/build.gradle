@@ -1,0 +1,177 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+
+File signFile = rootProject.file('component.properties')
+Properties properties = new Properties()
+if (signFile.exists()) {
+    properties.load(new FileInputStream(signFile))
+}
+
+android {
+
+    compileSdkVersion rootProject.ext.versions.compileSdkVersion
+
+    defaultConfig {
+        applicationId rootProject.ext.versions.applicationId
+        minSdkVersion rootProject.ext.versions.minSdkVersion
+        targetSdkVersion rootProject.ext.versions.targetSdkVersion
+        versionCode rootProject.ext.versions.versionCode
+        versionName rootProject.ext.versions.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    //signingConfigs需要放在buildTypes签名之前不然找不到
+    signingConfigs {
+        release {
+            storeFile rootProject.file(properties['storeFile'])
+            storePassword properties['storePassword']
+            keyAlias properties['keyAlias']
+            keyPassword properties['keyPassword']
+        }
+
+        debug {
+            //需要在build.gradle同目录下的gradle.properties中配置以下信息
+            storeFile rootProject.file(properties['storeFile'])
+            storePassword properties['storePassword']
+            keyAlias properties['keyAlias']
+            keyPassword properties['keyPassword']
+        }
+
+
+        buildTypes {
+            debug {
+                // 日志开关
+                buildConfigField "boolean", "ISBUG", "true"
+                //是否开启首页模块
+                buildConfigField "boolean", "haseHomeModule", "${haseHomeModule.toBoolean()}"
+                //是否开启热门模块
+                buildConfigField "boolean", "haseHotModule", "${haseHotModule.toBoolean()}"
+                //是否开启搜索模块
+                buildConfigField "boolean", "haseSearchModule", "${haseSearchModule.toBoolean()}"
+                //是否开启用户模块
+                buildConfigField "boolean", "haseUserModule", "${haseUserModule.toBoolean()}"
+
+                //移除无用的资源文件,必须开启混淆
+                shrinkResources false
+                // 优化压缩
+                zipAlignEnabled false
+                // 是否进行混淆
+                minifyEnabled false
+                // 混淆文件的位置
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+                //配置在debug包中也签上名,好处是debug包换release包不会清数据
+                signingConfig signingConfigs.debug
+            }
+
+            release {
+                // 日志开关
+                buildConfigField "boolean", "ISBUG", "false"
+                //是否开启首页模块
+                buildConfigField "boolean", "haseHomeModule", "${haseHomeModule.toBoolean()}"
+                //是否开启热门模块
+                buildConfigField "boolean", "haseHotModule", "${haseHotModule.toBoolean()}"
+                //是否开启搜索模块
+                buildConfigField "boolean", "haseSearchModule", "${haseSearchModule.toBoolean()}"
+                //是否开启用户模块
+                buildConfigField "boolean", "haseUserModule", "${haseUserModule.toBoolean()}"
+
+                //移除无用的资源文件,必须开启混淆
+                shrinkResources true
+                // 优化压缩
+                zipAlignEnabled true
+                // 是否进行混淆
+                minifyEnabled true
+                // 混淆文件的位置
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+                //签名文件配置
+                signingConfig signingConfigs.release
+            }
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为boohee_v1.0_2015-06-15_wandoujia.apk,多渠道打包
+                        if (variant.buildType.isDebuggable()) {
+                            def fileName = "component_debug_${defaultConfig.versionName}_${releaseTime()}.apk"
+                            output.outputFile = new File(outputFile.parent, fileName)
+                        } else {
+                            def fileName = "component_release_${defaultConfig.versionName}_${releaseTime()}.apk"
+                            output.outputFile = new File(outputFile.parent, fileName)
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+
+    // 渠道类型
+//    productFlavors {
+//        self {}
+//        tencent {}
+//        _360 {}
+//        // wandoujia {}
+//        // baidu {}
+//        // xiaomi {}
+//        // taobao {}
+//    }
+//    // 渠道名称
+//    productFlavors.all {
+//        flavor -> flavor.manifestPlaceholders = [CHANNEL_NAME: name]
+//    }
+
+    // 移除lint检查的error
+    lintOptions {
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
+}
+
+repositories {
+    flatDir {
+        dirs 'libs' //this way we can find the .aar file in libs folder
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation rootProject.ext.dependencies["support-v4"]
+    implementation rootProject.ext.dependencies["appcompat-v7"]
+    implementation rootProject.ext.dependencies["constraint-layout"]
+
+    implementation rootProject.ext.dependencies["kotlin-stdlib-jdk7"]
+
+    implementation rootProject.ext.dependencies["arouter-api"]
+
+
+    implementation project(path: ':CommonModule')
+
+    if (haseHomeModule.toBoolean()) {
+        implementation project(path: ':HomeModule')
+    }
+    if (haseHotModule.toBoolean()) {
+        implementation project(path: ':HotModule')
+    }
+    if (haseSearchModule.toBoolean()) {
+        implementation project(path: ':SearchModule')
+    }
+    if (haseUserModule.toBoolean()) {
+        implementation project(path: ':UserModule')
+    }
+
+    testImplementation rootProject.ext.dependencies["junit"]
+    androidTestImplementation rootProject.ext.dependencies["runner"]
+    androidTestImplementation rootProject.ext.dependencies["espresso-core"]
+}
