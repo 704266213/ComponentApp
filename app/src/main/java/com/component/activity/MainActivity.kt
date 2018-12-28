@@ -21,12 +21,6 @@ class MainActivity : AppCompatActivity() {
 
     private var currentIndex = 0
     private lateinit var radioButtons: List<RadioButton>
-    private var isOpenModules = mutableListOf(
-        BuildConfig.haseHomeModule,
-        BuildConfig.haseHotModule,
-        BuildConfig.haseSearchModule,
-        BuildConfig.haseUserModule
-    )
     private var routePaths = mutableListOf(
         RouteConfig.HomeFragment,
         RouteConfig.HotFragment,
@@ -49,9 +43,9 @@ class MainActivity : AppCompatActivity() {
         radioButtons = mutableListOf(home, hot, search, user)
         var position = 0
         radioButtons.forEachIndexed { index, radioButton ->
-            if (isOpenModules[index]) {
-                val baseFragment = ARouter.getInstance().build(routePaths[index]).navigation() as BaseFragment
-                baseFragments.add(baseFragment)
+            val baseFragment = ARouter.getInstance().build(routePaths[index]).navigation()
+            if (baseFragment != null) {
+                baseFragments.add(baseFragment as BaseFragment)
                 radioButton.setOnClickListener(OnTabClickListener(position++))
             } else {
                 radioButton.visibility = View.GONE

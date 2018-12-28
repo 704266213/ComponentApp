@@ -1,6 +1,7 @@
 package com.component.base
 
 import android.app.Application
+import android.content.Context
 
 /**
  * 项目名称：ComponentApp
@@ -15,10 +16,21 @@ import android.app.Application
 abstract class BaseApplication : Application() {
 
 
+    companion object {
+        @JvmField
+        var context: Context? = null
+
+        @JvmStatic
+        fun getRootContext(): Context = context!!
+
+    }
+
+
     override fun onCreate() {
         super.onCreate()
 
         initApplication()
+
     }
 
     abstract fun initApplication()

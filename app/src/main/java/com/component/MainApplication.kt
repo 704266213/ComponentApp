@@ -24,6 +24,9 @@ class MainApplication : BaseApplication() {
 //            ARouter.printStackTrace()
         }
         ARouter.init(this) // 尽可能早，推荐在Application中初始化
+
+        //内存泄漏检测
+//        LeakCanary.install(this)
     }
 
     override fun initApplication() {

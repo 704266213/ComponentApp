@@ -24,7 +24,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
 
@@ -52,14 +52,6 @@ android {
             debug {
                 // 日志开关
                 buildConfigField "boolean", "ISBUG", "true"
-                //是否开启首页模块
-                buildConfigField "boolean", "haseHomeModule", "${haseHomeModule.toBoolean()}"
-                //是否开启热门模块
-                buildConfigField "boolean", "haseHotModule", "${haseHotModule.toBoolean()}"
-                //是否开启搜索模块
-                buildConfigField "boolean", "haseSearchModule", "${haseSearchModule.toBoolean()}"
-                //是否开启用户模块
-                buildConfigField "boolean", "haseUserModule", "${haseUserModule.toBoolean()}"
 
                 //移除无用的资源文件,必须开启混淆
                 shrinkResources false
@@ -76,14 +68,6 @@ android {
             release {
                 // 日志开关
                 buildConfigField "boolean", "ISBUG", "false"
-                //是否开启首页模块
-                buildConfigField "boolean", "haseHomeModule", "${haseHomeModule.toBoolean()}"
-                //是否开启热门模块
-                buildConfigField "boolean", "haseHotModule", "${haseHotModule.toBoolean()}"
-                //是否开启搜索模块
-                buildConfigField "boolean", "haseSearchModule", "${haseSearchModule.toBoolean()}"
-                //是否开启用户模块
-                buildConfigField "boolean", "haseUserModule", "${haseUserModule.toBoolean()}"
 
                 //移除无用的资源文件,必须开启混淆
                 shrinkResources true
@@ -160,8 +144,7 @@ dependencies {
     implementation rootProject.ext.dependencies["kotlin-stdlib-jdk7"]
 
     implementation rootProject.ext.dependencies["arouter-api"]
-    kapt  rootProject.ext.dependencies["arouter-compiler"]
-
+    kapt rootProject.ext.dependencies["arouter-compiler"]
 
     implementation project(path: ':CommonModule')
 
