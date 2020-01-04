@@ -1,7 +1,7 @@
 package com.component.base.widget.loadmore
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.component.base.http.listener.OnStartRequestListener
 
 import com.component.base.http.loading.OnLoadingViewListener

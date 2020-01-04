@@ -1,6 +1,5 @@
 package com.component.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -9,6 +8,7 @@ import com.component.R
 import com.component.base.tools.ScreenTool
 import kotlinx.android.synthetic.main.activity_main.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.component.BuildConfig
 import com.component.base.BaseFragment
 import com.alibaba.android.arouter.launcher.ARouter

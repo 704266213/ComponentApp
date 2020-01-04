@@ -1,6 +1,6 @@
 package com.component.base.widget.loadmore
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import com.component.base.http.listener.OnStartRequestListener
 
 import com.component.base.http.loading.OnLoadingViewListener
@@ -59,7 +59,7 @@ abstract class OnLoadMoreScrollListener(private val onLoadingViewListener: OnLoa
             currentScrollState = newState
             val layoutManager = recyclerView!!.layoutManager
             val visibleItemCount = layoutManager!!.childCount
-            val totalItemCount = layoutManager!!.itemCount
+            val totalItemCount = layoutManager.itemCount
             if (visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition >= totalItemCount - 1) {
                 //自动显示加载更多布局的加载中的布局
                 if (onLoadingViewListener != null && hasMore) {
@@ -67,7 +67,7 @@ abstract class OnLoadMoreScrollListener(private val onLoadingViewListener: OnLoa
                 }
                 if (onStartRequestListener != null && !isLoadingMore) {
                     isLoadingMore = true
-                    onStartRequestListener!!.startRequest()
+                    onStartRequestListener.startRequest()
                 }
             }
         }

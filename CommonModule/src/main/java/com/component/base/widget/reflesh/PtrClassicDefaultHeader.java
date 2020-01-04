@@ -2,16 +2,16 @@ package com.component.base.widget.reflesh;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.component.base.R;
 import com.component.base.widget.reflesh.indicator.PtrIndicator;

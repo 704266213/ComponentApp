@@ -1,7 +1,7 @@
 package com.component.base.adapter.listener
 
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * 项目名称：MVP

@@ -26,7 +26,6 @@ class BasePresenter<out S, T>(private val httpService: IHttpService<S>, private 
 
 
     private fun startRequest(callPresenter: ICallPresenter<S, T>, onLoadingViewListener: OnLoadingViewListener?) {
-
         val apiService = httpService.createHttpService()
         val call = callPresenter.buildCall(apiService)
         val callBack = BaseResponseCallBack(onLoadingViewListener, onResponseListener)

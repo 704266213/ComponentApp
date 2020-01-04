@@ -5,11 +5,11 @@ package com.component.base.widget
 
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 
 import com.component.base.R
 import com.component.base.http.listener.OnStartRequestListener
